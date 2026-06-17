@@ -1,0 +1,50 @@
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { isFirebaseConfigured } from '@/lib/firebase';
+import { AuthProvider, useAuth } from '@/store/auth';
+import { DataProvider } from '@/store/data';
+import { Login } from '@/features/auth/Login';
+import { AppShell } from '@/components/AppShell';
+import { InboxView } from '@/features/inbox/InboxView';
+import { TasksView } from '@/features/tasks/TasksView';
+import { ScheduleView } from '@/features/schedule/ScheduleView';
+import { ActsView } from '@/features/acts/ActsView';
+import { TeamView, PersonDetailView } from '@/features/team/TeamView';
+import { NotesView } from '@/features/notes/NotesView';
+import { Spinner } from '@/components/ui';
+import { ConfigNotice } from '@/features/auth/ConfigNotice';
+
+function Gate() {
+  const { user, loading } = useAuth();
+  if (loading)
+    return (
+      <div className="flex h-full items-center justify-center">
+        <Spinner label="Lädt…" />
+      </div>
+    );
+  if (!user) return <Login />;
+  return (
+    <DataProvider>
+      <AppShell>
+        <Routes>
+          <Route path="/" element={<InboxView />} />
+          <Route path="/tasks" element={<TasksView />} />
+          <Route path="/schedule" element={<ScheduleView />} />
+          <Route path="/acts" element={<ActsView />} />
+          <Route path="/team" element={<TeamView />} />
+          <Route path="/team/:id" element={<PersonDetailView />} />
+          <Route path="/notes" element={<NotesView />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AppShell>
+    </DataProvider>
+  );
+}
+
+export default function App() {
+  if (!isFirebaseConfigured) return <ConfigNotice />;
+  return (
+    <AuthProvider>
+      <Gate />
+    </AuthProvider>
+  );
+}
