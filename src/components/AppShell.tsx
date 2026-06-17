@@ -19,7 +19,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex h-full">
       {/* Sidebar (Desktop) */}
-      <aside className="hidden w-56 shrink-0 flex-col border-r border-border bg-bg md:flex">
+      <aside className="hidden h-full w-56 shrink-0 flex-col border-r border-border bg-bg md:flex">
         <div className="flex items-center gap-2 px-4 py-3.5">
           <div className="flex h-6 w-6 items-center justify-center rounded-md border border-border bg-panel">
             <svg width="14" height="14" viewBox="0 0 32 32">
