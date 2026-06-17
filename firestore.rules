@@ -1,12 +1,42 @@
 rules_version = '2';
 
-// Sicherheitsregeln für callsheet.
-// - Nur eingeloggte Nutzer dürfen lesen/schreiben.
-// - Rollen-Logik: Feld `role` im User-Dokument (admin | member).
-//   Admins dürfen zusätzlich löschen.
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // ─── AstroClub Planetenquiz (unverändert) ─────────────────────────────────
+    match /scores/{doc} {
+      allow read: if true;
+      allow create: if request.auth != null
+                    && request.resource.data.keys().hasOnly([
+                      'name',
+                      'score',
+                      'maxScore',
+                      'percent',
+                      'lang',
+                      'quizId',
+                      'durationSeconds',
+                      'createdAt'
+                    ])
+                    && request.resource.data.name is string
+                    && request.resource.data.name.size() >= 1
+                    && request.resource.data.name.size() <= 30
+                    && request.resource.data.score is number
+                    && request.resource.data.score >= 0
+                    && request.resource.data.score <= 160
+                    && request.resource.data.maxScore == 160
+                    && request.resource.data.percent is number
+                    && request.resource.data.percent >= 0
+                    && request.resource.data.percent <= 100
+                    && (request.resource.data.lang == 'de' || request.resource.data.lang == 'en')
+                    && request.resource.data.quizId == 'astroclub-planetenquiz'
+                    && request.resource.data.durationSeconds is number
+                    && request.resource.data.durationSeconds >= 0
+                    && request.resource.data.durationSeconds <= 86400
+                    && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+
+    // ─── callsheet (75-Jahr-Feier Waldorfschule Frankfurt) ────────────────────
     function signedIn() {
       return request.auth != null;
     }
@@ -17,21 +47,20 @@ service cloud.firestore {
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
-    // User-Dokumente: jeder eingeloggte Nutzer darf lesen.
-    // Schreiben nur das eigene Dokument; die Rolle nur als 'member' selbst setzen
-    // (Hochstufung zu admin erfolgt manuell/durch Admin in der Console).
+    // User-Dokumente: eingeloggte Nutzer dürfen lesen; nur das eigene Dokument schreiben.
     match /users/{userId} {
       allow read: if signedIn();
       allow create, update: if signedIn() && request.auth.uid == userId;
       allow delete: if isAdmin();
     }
 
-    // Projektdaten: lesen + anlegen/ändern für alle eingeloggten Nutzer,
-    // löschen nur für Admins.
-    match /{coll}/{docId} {
-      allow read: if signedIn();
-      allow create, update: if signedIn();
-      allow delete: if isAdmin();
-    }
+    // Projektdaten (people, acts, scheduleBlocks, tasks, notes, comments):
+    // Lesen + Anlegen/Ändern für eingeloggte Nutzer; Löschen nur für Admins.
+    match /people/{id}          { allow read, create, update: if signedIn(); allow delete: if isAdmin(); }
+    match /acts/{id}            { allow read, create, update: if signedIn(); allow delete: if isAdmin(); }
+    match /scheduleBlocks/{id}  { allow read, create, update: if signedIn(); allow delete: if isAdmin(); }
+    match /tasks/{id}           { allow read, create, update: if signedIn(); allow delete: if isAdmin(); }
+    match /notes/{id}           { allow read, create, update: if signedIn(); allow delete: if isAdmin(); }
+    match /comments/{id}        { allow read, create, update: if signedIn(); allow delete: if isAdmin(); }
   }
 }
