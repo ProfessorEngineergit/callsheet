@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Inbox, CalendarClock, AlertTriangle, ListTodo, ArrowRight } from 'lucide-react';
+import { Inbox, CalendarClock, AlertTriangle, ListTodo, ArrowRight, Database } from 'lucide-react';
 import { isPast, parseISO } from 'date-fns';
 import { PageHeader } from '@/components/PageHeader';
 import { Spinner } from '@/components/ui';
@@ -9,6 +9,7 @@ import { useData } from '@/store/data';
 import { useAuth } from '@/store/auth';
 import { DAYS, SCHEDULE_TYPE } from '@/lib/constants';
 import { AvatarStack } from '@/components/Avatar';
+import { seedIfEmpty } from '@/lib/browserSeed';
 
 export function InboxView() {
   const { tasks, blocks, people, loading } = useData();
@@ -35,7 +36,33 @@ export function InboxView() {
     .filter((b) => b.type === 'Show' || b.type === 'Aufbau' || b.type === 'Abbau')
     .sort((a, b) => DAYS.findIndex((d) => d.key === a.day) - DAYS.findIndex((d) => d.key === b.day) || a.start.localeCompare(b.start));
 
+  const [seeding, setSeeding] = useState(false);
+  const handleSeed = async () => {
+    setSeeding(true);
+    await seedIfEmpty(appUser?.uid ?? 'unknown');
+    setSeeding(false);
+  };
+
   if (loading) return <Spinner label="Lädt…" />;
+
+  // Datenbank leer → Seed-Button anzeigen
+  if (!loading && tasks.length === 0 && people.length === 0) {
+    return (
+      <div className="flex h-full flex-col">
+        <PageHeader title="Inbox" icon={<Inbox size={16} />} />
+        <div className="flex flex-1 flex-col items-center justify-center gap-3 p-8 text-center">
+          <Database size={32} className="text-text-tertiary" />
+          <div className="text-[15px] font-medium">Keine Daten vorhanden</div>
+          <p className="max-w-xs text-text-secondary">
+            Die Datenbank ist leer. Lade die Ausgangsdaten (Team, Programm, Zeitplan, Aufgaben) mit einem Klick.
+          </p>
+          <button onClick={handleSeed} disabled={seeding} className="btn-primary mt-2">
+            {seeding ? 'Wird geladen…' : 'Initialdaten laden'}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-full flex-col">

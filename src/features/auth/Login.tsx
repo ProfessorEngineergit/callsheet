@@ -39,7 +39,7 @@ export function Login() {
         <div className="mb-7 flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-panel">
             <svg width="18" height="18" viewBox="0 0 32 32" fill="none">
-              <path d="M9 10h14M9 16h14M9 22h9" stroke="#E6E7EA" strokeWidth="2.4" strokeLinecap="round" />
+              <path d="M9 10h14M9 16h14M9 22h9" stroke="#E5484D" strokeWidth="2.4" strokeLinecap="round" />
             </svg>
           </div>
           <div>

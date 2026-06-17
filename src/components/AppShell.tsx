@@ -23,7 +23,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <div className="flex items-center gap-2 px-4 py-3.5">
           <div className="flex h-6 w-6 items-center justify-center rounded-md border border-border bg-panel">
             <svg width="14" height="14" viewBox="0 0 32 32">
-              <path d="M9 10h14M9 16h14M9 22h9" stroke="#E6E7EA" strokeWidth="2.8" strokeLinecap="round" />
+              <path d="M9 10h14M9 16h14M9 22h9" stroke="#E5484D" strokeWidth="2.8" strokeLinecap="round" />
             </svg>
           </div>
           <div className="text-[13px] font-semibold">callsheet</div>
@@ -94,7 +94,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div className="flex items-center gap-2">
             <div className="flex h-6 w-6 items-center justify-center rounded-md border border-border bg-panel">
               <svg width="14" height="14" viewBox="0 0 32 32">
-                <path d="M9 10h14M9 16h14M9 22h9" stroke="#E6E7EA" strokeWidth="2.8" strokeLinecap="round" />
+                <path d="M9 10h14M9 16h14M9 22h9" stroke="#E5484D" strokeWidth="2.8" strokeLinecap="round" />
               </svg>
             </div>
             <span className="text-[13px] font-semibold">callsheet</span>

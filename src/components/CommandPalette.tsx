@@ -29,7 +29,7 @@ export function CommandPalette() {
   };
 
   return createPortal(
-    <div data-cmdk-overlay="" onMouseDown={close} className="flex items-start justify-center pt-[12vh]">
+    <div onMouseDown={close} className="fixed inset-0 z-[60] flex items-start justify-center bg-black/60 pt-[12vh] backdrop-blur-sm">
       <div onMouseDown={(e) => e.stopPropagation()}>
         <Command label="Command Palette" loop>
           <Command.Input placeholder="Suchen oder Aktion ausführen…" autoFocus />

@@ -13,32 +13,18 @@ export default {
           secondary: '#9598A1',
           tertiary: '#6A6D75',
         },
-        // Schwarz-Weiß: Akzent ist jetzt Weiß statt Indigo.
-        accent: {
-          DEFAULT: '#FFFFFF',
-          hover: '#D4D4D4',
-        },
+        accent: { DEFAULT: '#FFFFFF', hover: '#D4D4D4' },
         status: {
           todo: '#6A6D75',
-          progress: '#C0C0C0',
-          blocked: '#888888',
+          progress: '#E2B340',
+          blocked: '#E5484D',
           done: '#E6E7EA',
         },
       },
-      fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-      },
-      fontSize: {
-        base: ['13px', '1.5'],
-      },
-      borderRadius: {
-        DEFAULT: '6px',
-        md: '6px',
-        lg: '8px',
-      },
-      transitionDuration: {
-        DEFAULT: '140ms',
-      },
+      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+      fontSize: { base: ['13px', '1.5'] },
+      borderRadius: { DEFAULT: '6px', md: '6px', lg: '8px' },
+      transitionDuration: { DEFAULT: '140ms' },
     },
   },
   plugins: [],
