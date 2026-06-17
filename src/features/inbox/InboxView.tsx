@@ -49,8 +49,8 @@ export function InboxView() {
         <div className="mx-auto max-w-3xl space-y-5">
           <div className="grid grid-cols-3 gap-2">
             <Stat label="Offen" value={open.length} color="#9598A1" />
-            <Stat label="Überfällig" value={overdue.length} color="#E5484D" />
-            <Stat label="Mir zugewiesen" value={mine.length} color="#5E6AD2" />
+            <Stat label="Überfällig" value={overdue.length} color="#C0C0C0" />
+            <Stat label="Mir zugewiesen" value={mine.length} color="#E6E7EA" />
           </div>
 
           <Section
@@ -70,7 +70,7 @@ export function InboxView() {
           </Section>
 
           {overdue.length > 0 && (
-            <Section icon={<AlertTriangle size={14} className="text-status-blocked" />} title="Überfällig">
+            <Section icon={<AlertTriangle size={14} className="text-text-secondary" />} title="Überfällig">
               {overdue.map((t) => (
                 <TaskRow key={t.id} task={t} />
               ))}

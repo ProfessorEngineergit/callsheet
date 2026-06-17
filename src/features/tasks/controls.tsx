@@ -33,7 +33,7 @@ export function StatusPicker({
               }}
             >
               <StatusIcon status={s} /> {TASK_STATUS[s].label}
-              {s === value && <Check size={13} className="ml-auto text-accent" />}
+              {s === value && <Check size={13} className="ml-auto text-text" />}
             </MenuItem>
           ))}
         </>
@@ -63,7 +63,7 @@ export function PriorityPicker({
               }}
             >
               <PriorityIcon priority={p} /> {TASK_PRIORITY[p].label}
-              {p === value && <Check size={13} className="ml-auto text-accent" />}
+              {p === value && <Check size={13} className="ml-auto text-text" />}
             </MenuItem>
           ))}
         </>
@@ -108,7 +108,7 @@ export function AssigneePicker({
           {people.map((p) => (
             <MenuItem key={p.id} active={value.includes(p.id)} onClick={() => toggle(p.id)}>
               <Avatar name={p.name} color={p.color} initials={p.initials} size={18} /> {p.name}
-              {value.includes(p.id) && <Check size={13} className="ml-auto text-accent" />}
+              {value.includes(p.id) && <Check size={13} className="ml-auto text-text" />}
             </MenuItem>
           ))}
         </div>
@@ -139,7 +139,7 @@ export function TagPicker({
             {TAGS.map((t) => (
               <MenuItem key={t} active={value.includes(t)} onClick={() => toggle(t)}>
                 {t}
-                {value.includes(t) && <Check size={13} className="ml-auto text-accent" />}
+                {value.includes(t) && <Check size={13} className="ml-auto text-text" />}
               </MenuItem>
             ))}
           </>

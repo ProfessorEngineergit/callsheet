@@ -120,7 +120,7 @@ export function NotesView() {
                       {canDelete && (
                         <button
                           onClick={() => deleteNote(n.id)}
-                          className="ml-auto text-text-tertiary opacity-0 transition-opacity hover:text-status-blocked group-hover:opacity-100"
+                          className="ml-auto text-text-tertiary opacity-0 transition-opacity hover:text-text group-hover:opacity-100"
                         >
                           <Trash2 size={14} />
                         </button>

@@ -4,7 +4,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Linear-artige Dark-Mode-Tokens
         bg: '#08090A',
         panel: '#0E0F11',
         hover: '#16171A',
@@ -14,15 +13,16 @@ export default {
           secondary: '#9598A1',
           tertiary: '#6A6D75',
         },
+        // Schwarz-Weiß: Akzent ist jetzt Weiß statt Indigo.
         accent: {
-          DEFAULT: '#5E6AD2',
-          hover: '#6E79E0',
+          DEFAULT: '#FFFFFF',
+          hover: '#D4D4D4',
         },
         status: {
-          todo: '#9598A1',
-          progress: '#E2B340',
-          blocked: '#E5484D',
-          done: '#3FB950',
+          todo: '#6A6D75',
+          progress: '#C0C0C0',
+          blocked: '#888888',
+          done: '#E6E7EA',
         },
       },
       fontFamily: {

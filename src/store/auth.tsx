@@ -11,11 +11,13 @@ import { auth, googleProvider } from '@/lib/firebase';
 import { createUserDoc, getUserDoc } from '@/lib/db';
 import type { AppUser } from '@/types';
 import { colorFromString, getInitials } from '@/lib/utils';
+import { isAllowedUser } from '@/lib/allowlist';
 
 interface AuthState {
   user: User | null;
   appUser: AppUser | null;
   loading: boolean;
+  allowed: boolean;
   loginEmail: (email: string, pw: string) => Promise<void>;
   registerEmail: (email: string, pw: string, name: string) => Promise<void>;
   loginGoogle: () => Promise<void>;
@@ -24,7 +26,6 @@ interface AuthState {
 
 const AuthContext = createContext<AuthState | null>(null);
 
-// Legt beim ersten Login ein User-Dokument an (Default-Rolle: member).
 async function ensureUserDoc(user: User, displayName?: string): Promise<AppUser> {
   const existing = await getUserDoc(user.uid);
   if (existing) return existing;
@@ -46,17 +47,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [appUser, setAppUser] = useState<AppUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const [allowed, setAllowed] = useState(false);
 
   useEffect(() => {
     return onAuthStateChanged(auth, async (u) => {
       setUser(u);
       if (u) {
-        try {
-          setAppUser(await ensureUserDoc(u));
-        } catch {
+        const ok = isAllowedUser(u);
+        setAllowed(ok);
+        if (ok) {
+          try {
+            setAppUser(await ensureUserDoc(u));
+          } catch {
+            setAppUser(null);
+          }
+        } else {
           setAppUser(null);
         }
       } else {
+        setAllowed(false);
         setAppUser(null);
       }
       setLoading(false);
@@ -67,6 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     user,
     appUser,
     loading,
+    allowed,
     loginEmail: async (email, pw) => {
       await signInWithEmailAndPassword(auth, email, pw);
     },

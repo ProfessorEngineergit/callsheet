@@ -111,7 +111,7 @@ function ActCard({
                   style={{ background: ACT_STATUS[s].color }}
                 />
                 {ACT_STATUS[s].label}
-                {s === act.status && <Check size={13} className="ml-auto text-accent" />}
+                {s === act.status && <Check size={13} className="ml-auto text-text" />}
               </MenuItem>
             ))}
           </>

@@ -38,7 +38,7 @@ export function TaskDrawer() {
                     await deleteTask(task.id);
                     close();
                   }}
-                  className="text-text-tertiary hover:text-status-blocked"
+                  className="text-text-tertiary hover:text-text"
                   title="Löschen (Admin)"
                 >
                   <Trash2 size={15} />

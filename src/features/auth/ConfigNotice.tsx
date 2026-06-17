@@ -5,7 +5,7 @@ export function ConfigNotice() {
   return (
     <div className="flex h-full items-center justify-center p-6">
       <div className="card max-w-md p-6">
-        <div className="mb-3 flex items-center gap-2 text-accent">
+        <div className="mb-3 flex items-center gap-2 text-text">
           <Settings size={18} />
           <h1 className="text-[15px] font-semibold text-text">Firebase-Konfiguration fehlt</h1>
         </div>

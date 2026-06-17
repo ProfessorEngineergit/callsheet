@@ -29,7 +29,7 @@ export function TeamView() {
                 <Link
                   key={p.id}
                   to={`/team/${p.id}`}
-                  className="card flex items-center gap-3 p-3 hover:border-accent/50"
+                  className="card flex items-center gap-3 p-3 hover:border-[#444]"
                 >
                   <Avatar name={p.name} color={p.color} initials={p.initials} size={38} />
                   <div className="min-w-0 flex-1">
@@ -95,12 +95,12 @@ export function PersonDetailView() {
           {/* Kontakt als tap-to-call / mailto (wichtig für Mobile) */}
           <div className="mt-3 flex flex-col gap-1.5">
             {person.email && (
-              <a href={`mailto:${person.email}`} className="flex items-center gap-2 text-accent hover:underline">
+              <a href={`mailto:${person.email}`} className="flex items-center gap-2 text-text hover:underline">
                 <Mail size={14} /> {person.email}
               </a>
             )}
             {person.phone && (
-              <a href={`tel:${person.phone.replace(/\s/g, '')}`} className="flex items-center gap-2 text-accent hover:underline">
+              <a href={`tel:${person.phone.replace(/\s/g, '')}`} className="flex items-center gap-2 text-text hover:underline">
                 <Phone size={14} /> {person.phone}
               </a>
             )}

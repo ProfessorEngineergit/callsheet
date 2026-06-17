@@ -7,7 +7,6 @@
 @tailwind utilities;
 
 :root {
-  /* Linear-artige Dark-Mode-Tokens (auch als CSS-Variablen verfügbar) */
   --bg: #08090a;
   --panel: #0e0f11;
   --hover: #16171a;
@@ -15,24 +14,19 @@
   --text: #e6e7ea;
   --text-secondary: #9598a1;
   --text-tertiary: #6a6d75;
-  --accent: #5e6ad2;
-  --accent-hover: #6e79e0;
-  --status-todo: #9598a1;
-  --status-progress: #e2b340;
-  --status-blocked: #e5484d;
-  --status-done: #3fb950;
+  /* Schwarz-Weiß: kein Blau mehr */
+  --accent: #ffffff;
+  --accent-hover: #d4d4d4;
+  --status-todo: #6a6d75;
+  --status-progress: #c0c0c0;
+  --status-blocked: #888888;
+  --status-done: #e6e7ea;
   color-scheme: dark;
 }
 
-* {
-  border-color: var(--border);
-}
+* { border-color: var(--border); }
 
-html,
-body,
-#root {
-  height: 100%;
-}
+html, body, #root { height: 100%; }
 
 body {
   margin: 0;
@@ -45,25 +39,13 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #24262b;
-  border-radius: 8px;
-  border: 2px solid var(--bg);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #303338;
-}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #24262b; border-radius: 8px; border: 2px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: #303338; }
 
-/* Fokus-Ring in Akzentfarbe */
 *:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 1px solid var(--border);
   outline-offset: 1px;
   border-radius: 4px;
 }
@@ -72,8 +54,9 @@ body {
   .btn {
     @apply inline-flex items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-[13px] font-medium transition-colors;
   }
+  /* Primär-Button: weiß mit schwarzem Text */
   .btn-primary {
-    @apply btn bg-accent text-white hover:bg-accent-hover;
+    @apply btn bg-white text-bg hover:bg-[#D4D4D4];
   }
   .btn-ghost {
     @apply btn text-text-secondary hover:bg-hover hover:text-text;
@@ -82,7 +65,7 @@ body {
     @apply btn border border-border bg-panel text-text hover:bg-hover;
   }
   .input {
-    @apply w-full rounded-md border border-border bg-bg px-2.5 py-1.5 text-[13px] text-text placeholder:text-text-tertiary focus:border-accent focus:outline-none;
+    @apply w-full rounded-md border border-border bg-bg px-2.5 py-1.5 text-[13px] text-text placeholder:text-text-tertiary focus:border-[#444] focus:outline-none;
   }
   .pill {
     @apply inline-flex items-center gap-1 rounded-full border border-border bg-hover px-2 py-0.5 text-[11px] text-text-secondary;
@@ -96,7 +79,7 @@ body {
 [cmdk-overlay] {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.65);
   backdrop-filter: blur(2px);
   z-index: 60;
 }
@@ -107,7 +90,7 @@ body {
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
 }
 [cmdk-input] {
   width: 100%;

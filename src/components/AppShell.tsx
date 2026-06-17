@@ -21,9 +21,9 @@ export function AppShell({ children }: { children: ReactNode }) {
       {/* Sidebar (Desktop) */}
       <aside className="hidden w-56 shrink-0 flex-col border-r border-border bg-bg md:flex">
         <div className="flex items-center gap-2 px-4 py-3.5">
-          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-accent text-white">
+          <div className="flex h-6 w-6 items-center justify-center rounded-md border border-border bg-panel">
             <svg width="14" height="14" viewBox="0 0 32 32">
-              <path d="M9 10h14M9 16h14M9 22h9" stroke="#fff" strokeWidth="2.8" strokeLinecap="round" />
+              <path d="M9 10h14M9 16h14M9 22h9" stroke="#E6E7EA" strokeWidth="2.8" strokeLinecap="round" />
             </svg>
           </div>
           <div className="text-[13px] font-semibold">callsheet</div>
@@ -92,9 +92,9 @@ export function AppShell({ children }: { children: ReactNode }) {
         {/* Mobile-Topbar */}
         <div className="flex items-center justify-between border-b border-border px-3 py-2.5 md:hidden">
           <div className="flex items-center gap-2">
-            <div className="flex h-6 w-6 items-center justify-center rounded-md bg-accent text-white">
+            <div className="flex h-6 w-6 items-center justify-center rounded-md border border-border bg-panel">
               <svg width="14" height="14" viewBox="0 0 32 32">
-                <path d="M9 10h14M9 16h14M9 22h9" stroke="#fff" strokeWidth="2.8" strokeLinecap="round" />
+                <path d="M9 10h14M9 16h14M9 22h9" stroke="#E6E7EA" strokeWidth="2.8" strokeLinecap="round" />
               </svg>
             </div>
             <span className="text-[13px] font-semibold">callsheet</span>
@@ -147,7 +147,7 @@ function MobileNewTaskFab() {
   return (
     <button
       onClick={() => setNewTaskOpen(true)}
-      className="fixed bottom-16 right-4 z-30 flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white shadow-lg shadow-black/40 md:hidden"
+      className="fixed bottom-16 right-4 z-30 flex h-12 w-12 items-center justify-center rounded-full border border-border bg-panel text-text shadow-lg shadow-black/60 md:hidden"
       aria-label="Neue Aufgabe"
     >
       <Plus size={22} />

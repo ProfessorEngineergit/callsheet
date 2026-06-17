@@ -172,7 +172,7 @@ function BoardView({ tasks }: { tasks: Task[] }) {
             onDrop={() => drop(status)}
             className={cn(
               'flex w-[270px] shrink-0 flex-col rounded-lg border border-border bg-panel/40',
-              overCol === status && 'ring-1 ring-accent',
+              overCol === status && 'ring-1 ring-border',
             )}
           >
             <div className="flex items-center gap-2 px-3 py-2 text-[12px]">
@@ -189,7 +189,7 @@ function BoardView({ tasks }: { tasks: Task[] }) {
                   onDragEnd={() => setDragId(null)}
                   onClick={() => setOpenTaskId(t.id)}
                   className={cn(
-                    'card cursor-pointer space-y-2 p-2.5 hover:border-accent/50',
+                    'card cursor-pointer space-y-2 p-2.5 hover:border-[#444]',
                     dragId === t.id && 'opacity-40',
                   )}
                 >

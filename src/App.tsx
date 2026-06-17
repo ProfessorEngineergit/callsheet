@@ -3,6 +3,7 @@ import { isFirebaseConfigured } from '@/lib/firebase';
 import { AuthProvider, useAuth } from '@/store/auth';
 import { DataProvider } from '@/store/data';
 import { Login } from '@/features/auth/Login';
+import { AccessDenied } from '@/features/auth/AccessDenied';
 import { AppShell } from '@/components/AppShell';
 import { InboxView } from '@/features/inbox/InboxView';
 import { TasksView } from '@/features/tasks/TasksView';
@@ -14,7 +15,7 @@ import { Spinner } from '@/components/ui';
 import { ConfigNotice } from '@/features/auth/ConfigNotice';
 
 function Gate() {
-  const { user, loading } = useAuth();
+  const { user, loading, allowed } = useAuth();
   if (loading)
     return (
       <div className="flex h-full items-center justify-center">
@@ -22,6 +23,7 @@ function Gate() {
       </div>
     );
   if (!user) return <Login />;
+  if (!allowed) return <AccessDenied email={user.email ?? user.displayName ?? ''} />;
   return (
     <DataProvider>
       <AppShell>
