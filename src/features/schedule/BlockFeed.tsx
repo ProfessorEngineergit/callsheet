@@ -6,13 +6,15 @@ import { Avatar } from '@/components/Avatar';
 import { useCollection } from '@/hooks/useCollection';
 import { useAuth } from '@/store/auth';
 import { useData } from '@/store/data';
-import { COL, createComment, deleteComment } from '@/lib/db';
+import { useToast } from '@/store/toast';
+import { COL, createComment, deleteComment, restoreComment } from '@/lib/db';
 import type { Comment } from '@/types';
 
 // Nachrichten-Feed an einem Zeitplan-Punkt: „Ich kümmere mich drum" usw.
 export function BlockFeed({ blockId }: { blockId: string }) {
   const { appUser } = useAuth();
   const { personById } = useData();
+  const toast = useToast();
   const { data } = useCollection<Comment>(COL.comments);
   const [open, setOpen] = useState(false);
   const [body, setBody] = useState('');
@@ -72,7 +74,10 @@ export function BlockFeed({ blockId }: { blockId: string }) {
                     <span>{format(m.createdAt, 'd. MMM HH:mm', { locale: de })}</span>
                     {mine && (
                       <button
-                        onClick={() => deleteComment(m.id)}
+                        onClick={() => {
+                          deleteComment(m.id);
+                          toast.show('Nachricht gelöscht', () => restoreComment(m));
+                        }}
                         className="ml-auto opacity-0 transition-opacity hover:text-status-blocked group-hover:opacity-100"
                       >
                         <Trash2 size={12} />

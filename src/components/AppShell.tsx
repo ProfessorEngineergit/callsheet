@@ -10,6 +10,7 @@ import { CommandPalette } from '@/components/CommandPalette';
 import { useShortcuts } from '@/hooks/useShortcuts';
 import { NewTaskDialog } from '@/features/tasks/NewTaskDialog';
 import { TaskDrawer } from '@/features/tasks/TaskDrawer';
+import { Toaster } from '@/components/Toaster';
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { appUser, logout } = useAuth();
@@ -115,6 +116,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <CommandPalette />
       <NewTaskDialog />
       <TaskDrawer />
+      <Toaster />
     </div>
   );
 }

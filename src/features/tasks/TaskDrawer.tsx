@@ -10,7 +10,8 @@ import { useUI } from '@/store/ui';
 import { useAuth } from '@/store/auth';
 import { useData } from '@/store/data';
 import { useCollection } from '@/hooks/useCollection';
-import { COL, deleteTask, updateTask } from '@/lib/db';
+import { COL, deleteTask, restoreTask, updateTask } from '@/lib/db';
+import { useToast } from '@/store/toast';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Avatar } from '@/components/Avatar';
@@ -21,6 +22,7 @@ export function TaskDrawer() {
   const { openTaskId, setOpenTaskId } = useUI();
   const { appUser } = useAuth();
   const { tasks, blocks, blockById, personById } = useData();
+  const toast = useToast();
   const task = tasks.find((t) => t.id === openTaskId);
 
   const close = () => setOpenTaskId(null);
@@ -35,10 +37,10 @@ export function TaskDrawer() {
               <span className="text-[12px]">Aufgabe</span>
               <button
                 onClick={async () => {
-                  if (confirm(`Aufgabe „${task.title}" löschen?`)) {
-                    await deleteTask(task.id);
-                    close();
-                  }
+                  const snapshot = task;
+                  await deleteTask(task.id);
+                  close();
+                  toast.show(`Aufgabe „${snapshot.title}" gelöscht`, () => restoreTask(snapshot));
                 }}
                 className="text-text-tertiary hover:text-status-blocked"
                 title="Aufgabe löschen"

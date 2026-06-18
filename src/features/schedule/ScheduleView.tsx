@@ -3,12 +3,14 @@ import { CalendarDays, Plus, StickyNote, Pencil, Trash2 } from 'lucide-react';
 import { PageHeader } from '@/components/PageHeader';
 import { EmptyState, Spinner } from '@/components/ui';
 import { useData } from '@/store/data';
+import { useToast } from '@/store/toast';
 import { DAYS, SCHEDULE_TYPE } from '@/lib/constants';
-import { deleteBlock } from '@/lib/db';
+import { deleteBlock, restoreBlock } from '@/lib/db';
 import { cn } from '@/lib/utils';
 import type { ScheduleBlock, ScheduleDay } from '@/types';
 import { EditMeta } from '@/components/EditMeta';
 import { BlockFeed } from './BlockFeed';
+import { BlockTasks } from './BlockTasks';
 import { BlockAssignees } from './BlockAssignees';
 import { BlockDialog } from './BlockDialog';
 
@@ -20,6 +22,7 @@ function todayScheduleDay(): ScheduleDay {
 
 export function ScheduleView() {
   const { blocks, loading } = useData();
+  const toast = useToast();
   const [day, setDay] = useState<ScheduleDay>(todayScheduleDay);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editBlock, setEditBlock] = useState<ScheduleBlock | undefined>();
@@ -116,7 +119,7 @@ export function ScheduleView() {
                         </span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <BlockAssignees blockId={b.id} value={b.responsiblePersonIds} />
+                        <BlockAssignees block={b} />
                         <button
                           onClick={() => openEdit(b)}
                           className="ml-1 text-text-tertiary hover:text-text"
@@ -126,7 +129,8 @@ export function ScheduleView() {
                         </button>
                         <button
                           onClick={() => {
-                            if (confirm(`„${b.title}" löschen?`)) deleteBlock(b.id);
+                            deleteBlock(b.id);
+                            toast.show(`„${b.title}" gelöscht`, () => restoreBlock(b));
                           }}
                           className="text-text-tertiary hover:text-status-blocked"
                           title="Löschen"
@@ -147,7 +151,8 @@ export function ScheduleView() {
                       <EditMeta by={b.updatedByName} at={b.updatedAt} className="mt-2" />
                     )}
 
-                    {/* Nachrichten-Feed pro Punkt */}
+                    {/* Aufgaben + Nachrichten-Feed pro Punkt */}
+                    <BlockTasks block={b} />
                     <BlockFeed blockId={b.id} />
                   </div>
                 </div>

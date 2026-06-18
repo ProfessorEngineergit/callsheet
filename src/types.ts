@@ -44,7 +44,8 @@ export interface ScheduleBlock {
   end?: string;
   title: string;
   type: ScheduleType;
-  responsiblePersonIds: string[];
+  responsiblePersonIds: string[]; // zusätzlich zugeteilte Personen (z. B. Veranstalter)
+  excludedPersonIds?: string[]; // aus dem Punkt entfernte Technik-Team-Mitglieder
   note?: string;
   uncertain?: boolean;
   updatedAt?: number;

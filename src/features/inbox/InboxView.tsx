@@ -10,6 +10,7 @@ import { useAuth } from '@/store/auth';
 import { DAYS, SCHEDULE_TYPE } from '@/lib/constants';
 import { AvatarStack } from '@/components/Avatar';
 import { seedIfEmpty } from '@/lib/browserSeed';
+import { effectiveAssignees } from '@/lib/schedule';
 
 export function InboxView() {
   const { tasks, blocks, people, loading } = useData();
@@ -122,7 +123,7 @@ export function InboxView() {
                     style={{ background: SCHEDULE_TYPE[b.type] }}
                   />
                   <span className="flex-1 truncate">{b.title}</span>
-                  <AvatarStack ids={b.responsiblePersonIds} size={18} />
+                  <AvatarStack ids={effectiveAssignees(b, people)} size={18} />
                 </button>
               ))}
             </div>

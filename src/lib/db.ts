@@ -54,6 +54,12 @@ export async function deleteTask(id: string): Promise<void> {
   await deleteDoc(doc(db, COL.tasks, id));
 }
 
+// Wiederherstellung (Undo) – behält die ursprüngliche ID & Daten bei.
+export async function restoreTask(task: Task): Promise<void> {
+  const { id, ...rest } = task;
+  await setDoc(doc(db, COL.tasks, id), rest);
+}
+
 // ---- Acts ----
 export async function createAct(data: Omit<Act, 'id'>): Promise<string> {
   const ref = await addDoc(collection(db, COL.acts), data);
@@ -76,6 +82,10 @@ export async function updateBlock(id: string, patch: Partial<ScheduleBlock>): Pr
 }
 export async function deleteBlock(id: string): Promise<void> {
   await deleteDoc(doc(db, COL.scheduleBlocks, id));
+}
+export async function restoreBlock(block: ScheduleBlock): Promise<void> {
+  const { id, ...rest } = block;
+  await setDoc(doc(db, COL.scheduleBlocks, id), rest);
 }
 
 // ---- People ----
@@ -110,6 +120,10 @@ export async function createComment(
 }
 export async function deleteComment(id: string): Promise<void> {
   await deleteDoc(doc(db, COL.comments, id));
+}
+export async function restoreComment(comment: Comment): Promise<void> {
+  const { id, ...rest } = comment;
+  await setDoc(doc(db, COL.comments, id), rest);
 }
 
 export { serverTimestamp };
