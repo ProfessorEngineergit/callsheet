@@ -9,6 +9,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { db } from './firebase';
+import { stamp } from './actor';
 import type { Act, AppUser, Comment, Note, Person, ScheduleBlock, Task } from '@/types';
 
 // Datenmodell: Top-Level-Sammlungen für eine einzelne Projekt-Instanz.
@@ -40,13 +41,13 @@ export async function createTask(
   const ref = await addDoc(collection(db, COL.tasks), {
     ...data,
     createdAt: Date.now(),
-    updatedAt: Date.now(),
+    ...stamp(), // updatedAt + updatedBy + updatedByName
   });
   return ref.id;
 }
 
 export async function updateTask(id: string, patch: Partial<Task>): Promise<void> {
-  await updateDoc(doc(db, COL.tasks, id), { ...patch, updatedAt: Date.now() });
+  await updateDoc(doc(db, COL.tasks, id), { ...patch, ...stamp() });
 }
 
 export async function deleteTask(id: string): Promise<void> {
@@ -67,11 +68,11 @@ export async function deleteAct(id: string): Promise<void> {
 
 // ---- ScheduleBlocks ----
 export async function createBlock(data: Omit<ScheduleBlock, 'id'>): Promise<string> {
-  const ref = await addDoc(collection(db, COL.scheduleBlocks), data);
+  const ref = await addDoc(collection(db, COL.scheduleBlocks), { ...data, ...stamp() });
   return ref.id;
 }
 export async function updateBlock(id: string, patch: Partial<ScheduleBlock>): Promise<void> {
-  await updateDoc(doc(db, COL.scheduleBlocks, id), patch);
+  await updateDoc(doc(db, COL.scheduleBlocks, id), { ...patch, ...stamp() });
 }
 export async function deleteBlock(id: string): Promise<void> {
   await deleteDoc(doc(db, COL.scheduleBlocks, id));

@@ -47,6 +47,9 @@ export interface ScheduleBlock {
   responsiblePersonIds: string[];
   note?: string;
   uncertain?: boolean;
+  updatedAt?: number;
+  updatedBy?: string;
+  updatedByName?: string;
 }
 
 export type TaskStatus = 'todo' | 'in_progress' | 'blocked' | 'done';
@@ -66,6 +69,8 @@ export interface Task {
   createdAt: number;
   updatedAt: number;
   createdBy: string;
+  updatedBy?: string;
+  updatedByName?: string;
 }
 
 export type NoteAttachType = 'act' | 'task' | 'person' | 'general';

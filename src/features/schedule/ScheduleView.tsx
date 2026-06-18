@@ -7,6 +7,7 @@ import { DAYS, SCHEDULE_TYPE } from '@/lib/constants';
 import { deleteBlock } from '@/lib/db';
 import { cn } from '@/lib/utils';
 import type { ScheduleBlock, ScheduleDay } from '@/types';
+import { EditMeta } from '@/components/EditMeta';
 import { BlockFeed } from './BlockFeed';
 import { BlockAssignees } from './BlockAssignees';
 import { BlockDialog } from './BlockDialog';
@@ -134,6 +135,10 @@ export function ScheduleView() {
                         <StickyNote size={13} className="mt-0.5 shrink-0 text-text-tertiary" />
                         <span>{b.note}</span>
                       </div>
+                    )}
+
+                    {b.updatedByName && (
+                      <EditMeta by={b.updatedByName} at={b.updatedAt} className="mt-2" />
                     )}
 
                     {/* Nachrichten-Feed pro Punkt */}

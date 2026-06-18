@@ -1,4 +1,11 @@
+import { formatDistanceToNow } from 'date-fns';
+import { de } from 'date-fns/locale';
 import { AVATAR_COLORS } from './constants';
+
+// "vor 3 Minuten" usw. – relative Zeit auf Deutsch.
+export function relativeTime(ts: number): string {
+  return formatDistanceToNow(ts, { addSuffix: true, locale: de });
+}
 
 export function cn(...parts: Array<string | false | null | undefined>): string {
   return parts.filter(Boolean).join(' ');

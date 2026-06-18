@@ -14,6 +14,7 @@ import { COL, deleteTask, updateTask } from '@/lib/db';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Avatar } from '@/components/Avatar';
+import { EditMeta } from '@/components/EditMeta';
 import type { Comment, Task } from '@/types';
 
 export function TaskDrawer() {
@@ -89,7 +90,7 @@ export function TaskDrawer() {
               <Row label="Tags">
                 <TagPicker value={task.tags} onChange={(tags) => patch({ tags })} />
               </Row>
-              <Row label="Zeitplan">
+              <Row label="Zeitplan (Block)">
                 <RelationPicker
                   current={task.relatedBlockId}
                   options={blocks.map((b) => ({ id: b.id, label: `${b.day} ${b.start} · ${b.title}` }))}
@@ -104,6 +105,10 @@ export function TaskDrawer() {
                   onChange={(relatedBlockId) => patch({ relatedBlockId })}
                 />
               </Row>
+            </div>
+
+            <div className="border-t border-border px-4 py-2">
+              <EditMeta by={task.updatedByName} at={task.updatedAt} />
             </div>
 
             <Comments taskId={task.id} />

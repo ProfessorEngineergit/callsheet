@@ -12,6 +12,7 @@ import { createUserDoc, getUserDoc } from '@/lib/db';
 import type { AppUser } from '@/types';
 import { colorFromString, getInitials } from '@/lib/utils';
 import { isAllowedUser } from '@/lib/allowlist';
+import { setActor } from '@/lib/actor';
 
 interface AuthState {
   user: User | null;
@@ -57,7 +58,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setAllowed(ok);
         if (ok) {
           try {
-            setAppUser(await ensureUserDoc(u));
+            const au = await ensureUserDoc(u);
+            setAppUser(au);
+            // Akteur für Änderungs-Signaturen setzen
+            setActor({ uid: au.uid, name: au.name });
           } catch {
             setAppUser(null);
           }
