@@ -12,9 +12,15 @@ import { BlockFeed } from './BlockFeed';
 import { BlockAssignees } from './BlockAssignees';
 import { BlockDialog } from './BlockDialog';
 
+// Aktueller Wochentag → Zeitplan-Tag (Mi/Do/Fr/Sa). Außerhalb: Freitag (Show-Tag).
+function todayScheduleDay(): ScheduleDay {
+  const map: Record<number, ScheduleDay> = { 3: 'Mi', 4: 'Do', 5: 'Fr', 6: 'Sa' };
+  return map[new Date().getDay()] ?? 'Fr';
+}
+
 export function ScheduleView() {
   const { blocks, loading } = useData();
-  const [day, setDay] = useState<ScheduleDay>('Fr');
+  const [day, setDay] = useState<ScheduleDay>(todayScheduleDay);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editBlock, setEditBlock] = useState<ScheduleBlock | undefined>();
 
