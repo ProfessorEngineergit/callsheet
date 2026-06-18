@@ -19,7 +19,7 @@ import type { Comment, Task } from '@/types';
 export function TaskDrawer() {
   const { openTaskId, setOpenTaskId } = useUI();
   const { appUser } = useAuth();
-  const { tasks, acts, blocks, actById, blockById, personById } = useData();
+  const { tasks, blocks, blockById, personById } = useData();
   const task = tasks.find((t) => t.id === openTaskId);
 
   const close = () => setOpenTaskId(null);
@@ -32,18 +32,18 @@ export function TaskDrawer() {
           <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
             <div className="flex items-center gap-2 text-text-tertiary">
               <span className="text-[12px]">Aufgabe</span>
-              {appUser?.role === 'admin' && (
-                <button
-                  onClick={async () => {
+              <button
+                onClick={async () => {
+                  if (confirm(`Aufgabe „${task.title}" löschen?`)) {
                     await deleteTask(task.id);
                     close();
-                  }}
-                  className="text-text-tertiary hover:text-text"
-                  title="Löschen (Admin)"
-                >
-                  <Trash2 size={15} />
-                </button>
-              )}
+                  }
+                }}
+                className="text-text-tertiary hover:text-status-blocked"
+                title="Aufgabe löschen"
+              >
+                <Trash2 size={15} />
+              </button>
             </div>
             <button onClick={close} className="text-text-tertiary hover:text-text">
               <X size={17} />
@@ -89,15 +89,7 @@ export function TaskDrawer() {
               <Row label="Tags">
                 <TagPicker value={task.tags} onChange={(tags) => patch({ tags })} />
               </Row>
-              <Row label="Programm">
-                <RelationPicker
-                  current={task.relatedActId}
-                  options={acts.map((a) => ({ id: a.id, label: a.title }))}
-                  currentLabel={task.relatedActId ? actById(task.relatedActId)?.title : undefined}
-                  onChange={(relatedActId) => patch({ relatedActId })}
-                />
-              </Row>
-              <Row label="Zeitblock">
+              <Row label="Zeitplan">
                 <RelationPicker
                   current={task.relatedBlockId}
                   options={blocks.map((b) => ({ id: b.id, label: `${b.day} ${b.start} · ${b.title}` }))}

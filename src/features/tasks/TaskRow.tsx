@@ -1,10 +1,9 @@
 import { format, isPast, parseISO } from 'date-fns';
 import { de } from 'date-fns/locale';
-import { CalendarClock, Link2 } from 'lucide-react';
+import { CalendarClock } from 'lucide-react';
 import { StatusPicker, PriorityPicker } from './controls';
 import { AvatarStack } from '@/components/Avatar';
 import { Pill } from '@/components/ui';
-import { useData } from '@/store/data';
 import { useUI } from '@/store/ui';
 import { updateTask } from '@/lib/db';
 import { cn } from '@/lib/utils';
@@ -12,10 +11,8 @@ import type { Task } from '@/types';
 
 export function TaskRow({ task }: { task: Task }) {
   const { setOpenTaskId } = useUI();
-  const { actById } = useData();
   const overdue =
     task.dueDate && task.status !== 'done' && isPast(parseISO(task.dueDate + 'T23:59:59'));
-  const act = task.relatedActId ? actById(task.relatedActId) : undefined;
 
   return (
     <div
@@ -37,11 +34,6 @@ export function TaskRow({ task }: { task: Task }) {
         {task.title}
       </div>
       <div className="hidden items-center gap-1.5 sm:flex">
-        {act && (
-          <Pill>
-            <Link2 size={10} /> {act.title}
-          </Pill>
-        )}
         {task.tags.slice(0, 2).map((t) => (
           <Pill key={t}>{t}</Pill>
         ))}

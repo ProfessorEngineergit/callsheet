@@ -8,9 +8,7 @@ import { AppShell } from '@/components/AppShell';
 import { InboxView } from '@/features/inbox/InboxView';
 import { TasksView } from '@/features/tasks/TasksView';
 import { ScheduleView } from '@/features/schedule/ScheduleView';
-import { ActsView } from '@/features/acts/ActsView';
 import { TeamView, PersonDetailView } from '@/features/team/TeamView';
-import { NotesView } from '@/features/notes/NotesView';
 import { Spinner } from '@/components/ui';
 import { ConfigNotice } from '@/features/auth/ConfigNotice';
 
@@ -29,12 +27,10 @@ function Gate() {
       <AppShell>
         <Routes>
           <Route path="/" element={<InboxView />} />
-          <Route path="/tasks" element={<TasksView />} />
           <Route path="/schedule" element={<ScheduleView />} />
-          <Route path="/acts" element={<ActsView />} />
+          <Route path="/tasks" element={<TasksView />} />
           <Route path="/team" element={<TeamView />} />
           <Route path="/team/:id" element={<PersonDetailView />} />
-          <Route path="/notes" element={<NotesView />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AppShell>

@@ -24,11 +24,10 @@ interface Filters {
   tag?: string;
   status?: TaskStatus;
   priority?: string;
-  actId?: string;
 }
 
 export function TasksView() {
-  const { tasks, people, acts, loading } = useData();
+  const { tasks, people, loading } = useData();
   const { setNewTaskOpen, search } = useUI();
   const [mode, setMode] = useState<ViewMode>('list');
   const [filters, setFilters] = useState<Filters>({});
@@ -41,7 +40,6 @@ export function TasksView() {
         if (filters.tag && !t.tags.includes(filters.tag)) return false;
         if (filters.status && t.status !== filters.status) return false;
         if (filters.priority && t.priority !== filters.priority) return false;
-        if (filters.actId && t.relatedActId !== filters.actId) return false;
         if (q && !(t.title + (t.description ?? '')).toLowerCase().includes(q)) return false;
         return true;
       })
@@ -85,7 +83,7 @@ export function TasksView() {
         <div className="flex flex-wrap items-center gap-1.5 border-b border-border px-4 py-2">
           {activeFilters.map(([key, val]) => (
             <Pill key={key} onRemove={() => setFilters((f) => ({ ...f, [key]: undefined }))}>
-              {labelForFilter(key, val as string, people, acts)}
+              {labelForFilter(key, val as string, people)}
             </Pill>
           ))}
           <button
@@ -230,7 +228,7 @@ function FilterMenu({
   filters: Filters;
   setFilters: React.Dispatch<React.SetStateAction<Filters>>;
 }) {
-  const { people, acts } = useData();
+  const { people } = useData();
   const set = (patch: Partial<Filters>) => setFilters((f) => ({ ...f, ...patch }));
   return (
     <Menu
@@ -268,17 +266,6 @@ function FilterMenu({
               </MenuItem>
             ))}
           </Section>
-          <Section title="Programm">
-            {acts.map((a) => (
-              <MenuItem
-                key={a.id}
-                active={filters.actId === a.id}
-                onClick={() => set({ actId: a.id })}
-              >
-                {a.title}
-              </MenuItem>
-            ))}
-          </Section>
           <div className="border-t border-border p-1">
             <MenuItem
               onClick={() => {
@@ -308,10 +295,8 @@ function labelForFilter(
   key: string,
   val: string,
   people: ReturnType<typeof useData>['people'],
-  acts: ReturnType<typeof useData>['acts'],
 ): string {
   if (key === 'assignee') return people.find((p) => p.id === val)?.name ?? val;
-  if (key === 'actId') return acts.find((a) => a.id === val)?.title ?? val;
   if (key === 'status') return TASK_STATUS[val as TaskStatus].label;
   if (key === 'priority') return TASK_PRIORITY[val as keyof typeof TASK_PRIORITY]?.label ?? val;
   return val;

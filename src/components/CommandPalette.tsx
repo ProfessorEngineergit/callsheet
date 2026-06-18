@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
 import { Command } from 'cmdk';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
-import { Plus, ArrowRight } from 'lucide-react';
+import { Plus, ArrowRight, CalendarDays } from 'lucide-react';
 import { useUI } from '@/store/ui';
 import { useData } from '@/store/data';
 import { NAV } from '@/lib/nav';
@@ -11,14 +10,7 @@ import { StatusIcon } from '@/components/icons';
 export function CommandPalette() {
   const navigate = useNavigate();
   const { paletteOpen, setPaletteOpen, setNewTaskOpen, setOpenTaskId } = useUI();
-  const { tasks, acts, people } = useData();
-
-  useEffect(() => {
-    if (!paletteOpen) return;
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setPaletteOpen(false);
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [paletteOpen, setPaletteOpen]);
+  const { tasks, people, blocks } = useData();
 
   if (!paletteOpen) return null;
 
@@ -29,7 +21,10 @@ export function CommandPalette() {
   };
 
   return createPortal(
-    <div onMouseDown={close} className="fixed inset-0 z-[60] flex items-start justify-center bg-black/60 pt-[12vh] backdrop-blur-sm">
+    <div
+      onMouseDown={close}
+      className="fixed inset-0 z-[60] flex items-start justify-center bg-black/60 pt-[12vh] backdrop-blur-sm"
+    >
       <div onMouseDown={(e) => e.stopPropagation()}>
         <Command label="Command Palette" loop>
           <Command.Input placeholder="Suchen oder Aktion ausführen…" autoFocus />
@@ -72,17 +67,18 @@ export function CommandPalette() {
               ))}
             </Command.Group>
 
-            <Command.Group heading="Programm">
-              {acts.map((a) => (
+            <Command.Group heading="Zeitplan">
+              {blocks.map((b) => (
                 <Command.Item
-                  key={a.id}
-                  value={`programm ${a.title} ${a.category}`}
-                  onSelect={() => run(() => navigate('/acts'))}
+                  key={b.id}
+                  value={`zeitplan ${b.day} ${b.title}`}
+                  onSelect={() => run(() => navigate('/schedule'))}
                 >
-                  {a.rehearsalTime && (
-                    <span className="text-text-tertiary tabular-nums">{a.rehearsalTime}</span>
-                  )}{' '}
-                  {a.title} <span className="text-text-tertiary">· {a.category}</span>
+                  <CalendarDays size={14} />
+                  <span className="text-text-tertiary tabular-nums">
+                    {b.day} {b.start}
+                  </span>{' '}
+                  {b.title}
                 </Command.Item>
               ))}
             </Command.Group>

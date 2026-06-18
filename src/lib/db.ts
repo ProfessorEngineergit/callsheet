@@ -9,7 +9,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { db } from './firebase';
-import type { Act, AppUser, Note, Person, ScheduleBlock, Task } from '@/types';
+import type { Act, AppUser, Comment, Note, Person, ScheduleBlock, Task } from '@/types';
 
 // Datenmodell: Top-Level-Sammlungen für eine einzelne Projekt-Instanz.
 // (Dokumentiert in README.md – Alternative wäre projects/jubilaeum-75/…)
@@ -96,6 +96,19 @@ export async function createNote(data: Omit<Note, 'id' | 'createdAt'>): Promise<
 }
 export async function deleteNote(id: string): Promise<void> {
   await deleteDoc(doc(db, COL.notes, id));
+}
+
+// ---- Comments (Feed an Aufgabe oder Zeitplan-Punkt) ----
+export async function createComment(
+  data: Omit<Comment, 'id' | 'createdAt'>,
+): Promise<string> {
+  // undefined-Felder rausfiltern (Firestore akzeptiert kein undefined)
+  const clean = Object.fromEntries(Object.entries(data).filter(([, v]) => v !== undefined));
+  const ref = await addDoc(collection(db, COL.comments), { ...clean, createdAt: Date.now() });
+  return ref.id;
+}
+export async function deleteComment(id: string): Promise<void> {
+  await deleteDoc(doc(db, COL.comments, id));
 }
 
 export { serverTimestamp };

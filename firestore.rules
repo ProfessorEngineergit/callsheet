@@ -54,13 +54,13 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
-    // Projektdaten (people, acts, scheduleBlocks, tasks, notes, comments):
-    // Lesen + Anlegen/Ändern für eingeloggte Nutzer; Löschen nur für Admins.
-    match /people/{id}          { allow read, create, update: if signedIn(); allow delete: if isAdmin(); }
-    match /acts/{id}            { allow read, create, update: if signedIn(); allow delete: if isAdmin(); }
-    match /scheduleBlocks/{id}  { allow read, create, update: if signedIn(); allow delete: if isAdmin(); }
-    match /tasks/{id}           { allow read, create, update: if signedIn(); allow delete: if isAdmin(); }
-    match /notes/{id}           { allow read, create, update: if signedIn(); allow delete: if isAdmin(); }
-    match /comments/{id}        { allow read, create, update: if signedIn(); allow delete: if isAdmin(); }
+    // Personen: löschen nur Admins (Team-Stamm soll stabil bleiben).
+    match /people/{id} { allow read, create, update: if signedIn(); allow delete: if isAdmin(); }
+
+    // Zeitplan, Aufgaben & Nachrichten/Feed: eingeloggte Nutzer dürfen voll arbeiten,
+    // inkl. Löschen (Zugang ist bereits über die Namensliste eingeschränkt).
+    match /scheduleBlocks/{id} { allow read, create, update, delete: if signedIn(); }
+    match /tasks/{id}          { allow read, create, update, delete: if signedIn(); }
+    match /comments/{id}       { allow read, create, update, delete: if signedIn(); }
   }
 }

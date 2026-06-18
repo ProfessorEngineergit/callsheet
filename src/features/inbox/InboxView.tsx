@@ -16,11 +16,14 @@ export function InboxView() {
   const { appUser } = useAuth();
   const navigate = useNavigate();
 
-  // Verknüpft den eingeloggten Nutzer über die E-Mail mit einer Person.
-  const myPersonId = useMemo(
-    () => people.find((p) => p.email && p.email === appUser?.email)?.id,
-    [people, appUser],
-  );
+  // Verknüpft den eingeloggten Nutzer mit einer Person (per E-Mail ODER Name).
+  const myPersonId = useMemo(() => {
+    const email = appUser?.email?.toLowerCase();
+    const name = appUser?.name?.toLowerCase();
+    return people.find(
+      (p) => (email && p.email?.toLowerCase() === email) || (name && p.name.toLowerCase() === name),
+    )?.id;
+  }, [people, appUser]);
 
   const mine = tasks.filter(
     (t) => myPersonId && t.assigneeIds.includes(myPersonId) && t.status !== 'done',
@@ -46,7 +49,7 @@ export function InboxView() {
   if (loading) return <Spinner label="Lädt…" />;
 
   // Datenbank leer → Seed-Button anzeigen
-  if (!loading && tasks.length === 0 && people.length === 0) {
+  if (!loading && people.length === 0) {
     return (
       <div className="flex h-full flex-col">
         <PageHeader title="Inbox" icon={<Inbox size={16} />} />
@@ -54,7 +57,7 @@ export function InboxView() {
           <Database size={32} className="text-text-tertiary" />
           <div className="text-[15px] font-medium">Keine Daten vorhanden</div>
           <p className="max-w-xs text-text-secondary">
-            Die Datenbank ist leer. Lade die Ausgangsdaten (Team, Programm, Zeitplan, Aufgaben) mit einem Klick.
+            Lade die Ausgangsdaten der Feier (Team & Zeitplan aus dem E-Mail-Verlauf) mit einem Klick.
           </p>
           <button onClick={handleSeed} disabled={seeding} className="btn-primary mt-2">
             {seeding ? 'Wird geladen…' : 'Initialdaten laden'}
@@ -89,7 +92,7 @@ export function InboxView() {
               <Hint>
                 {myPersonId
                   ? 'Dir sind aktuell keine offenen Aufgaben zugewiesen.'
-                  : 'Dein Login ist noch keiner Person zugeordnet (E-Mail-Abgleich). Lege im Team eine Person mit deiner E-Mail an.'}
+                  : 'Dein Login ist noch keiner Person im Team zugeordnet (Abgleich über Name/E-Mail).'}
               </Hint>
             ) : (
               mine.map((t) => <TaskRow key={t.id} task={t} />)

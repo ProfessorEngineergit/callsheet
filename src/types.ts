@@ -3,9 +3,13 @@
 
 export type Role = 'admin' | 'member';
 
+// Gruppen für die Feier: das Technik-Team (wir) und die Veranstalter (Schule/Künstler).
+export type PersonGroup = 'technik' | 'veranstalter';
+
 export interface Person {
   id: string;
   name: string;
+  group: PersonGroup;
   tags: string[];
   role: Role;
   email?: string;
@@ -74,10 +78,13 @@ export interface Note {
   attachedTo?: { type: NoteAttachType; id?: string };
 }
 
+// Kommentar/Nachricht – an einer Aufgabe ODER an einem Zeitplan-Punkt (Feed).
 export interface Comment {
   id: string;
-  taskId: string;
+  taskId?: string;
+  blockId?: string;
   authorId: string;
+  authorName?: string;
   body: string;
   createdAt: number;
 }

@@ -15,6 +15,8 @@ const ALLOWED_PATTERNS = [
   'thorsten',
   // Kay Schmid
   'kay schmid', 'kschmid',
+  // Annika Hartel
+  'annika', 'hartel',
 ];
 
 export function isAllowedUser(user: User): boolean {

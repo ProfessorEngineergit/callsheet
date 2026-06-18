@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { cert, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
-import { people, acts, blocks, tasks, notes } from './seedData';
+import { people, blocks } from './seedData';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const keyPath = resolve(__dirname, '..', 'serviceAccount.json');
@@ -48,10 +48,7 @@ async function seedCollection<T extends { id: string }>(name: string, docs: T[])
 
 async function main() {
   await seedCollection('people', people);
-  await seedCollection('acts', acts);
   await seedCollection('scheduleBlocks', blocks);
-  await seedCollection('tasks', tasks);
-  await seedCollection('notes', notes);
   console.log('\n✅  Seed abgeschlossen.\n');
   process.exit(0);
 }
