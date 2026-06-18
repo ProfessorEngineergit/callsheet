@@ -4,7 +4,7 @@ import type { User } from 'firebase/auth';
 // Kann später durch exakte E-Mail-Prüfung in Firestore-Rules ersetzt werden.
 const ALLOWED_PATTERNS = [
   // Lou Huber
-  'lou huber', 'louhuber',
+  'lou huber', 'louhuber', 'huber',
   // Bahrian Novotny
   'bahrian', 'novotny',
   // Simon Bentlage

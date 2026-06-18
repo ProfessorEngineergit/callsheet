@@ -15,6 +15,7 @@ const PEOPLE: (Person & { id: string })[] = [
   { id: 'thorsten', name: 'Thorsten Hochhaus', group: 'technik', role: 'member', tags: ['Technik'],  email: 'th@freiraum-erleben.com', phone: '+49 163 7459361', color: '#8A8A8A', initials: 'TH' },
   { id: 'simon',    name: 'Simon Bentlage',    group: 'technik', role: 'member', tags: ['Technik'],                                              color: '#9E9E9E', initials: 'SB' },
   { id: 'annika',   name: 'Annika Hartel',     group: 'technik', role: 'member', tags: ['Technik'],                                              color: '#B3B3B3', initials: 'AH' },
+  { id: 'lou',      name: 'Lou Huber',         group: 'technik', role: 'member', tags: ['Technik'],                                              color: '#5A5A5A', initials: 'LH' },
   // ── Veranstalter (Schule & Künstler) ──
   { id: 'sarah',    name: 'Sarah Lindermayer', group: 'veranstalter', role: 'member', tags: ['Artistik'], email: 'info@sarah-lindermayer.de', phone: '0175 7163796', color: '#525252', initials: 'SL' },
   { id: 'emmy',     name: 'Emmy Levedag',      group: 'veranstalter', role: 'member', tags: ['Artistik'], email: 'emmy.levedag@icloud.com',   color: '#383838', initials: 'EL' },
