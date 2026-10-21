@@ -15,7 +15,7 @@ Die Oberfläche verwendet eine dunkle, an **Linear** angelehnte Gestaltung mit T
 - **React Router** v6 · **Zustand** (UI-State) · **lucide-react** · **date-fns** (Locale `de`) ·
   **cmdk** (Command-Palette)
 
-Kein eigener Backend-Server – Firestore ist die Datenbank.
+Kein eigener Backend-Server - Firestore ist die Datenbank.
 
 ---
 
@@ -36,7 +36,7 @@ Ohne ausgefüllte `.env.local` zeigt die App einen Konfigurations-Hinweis statt 
 1. **Projekt anlegen:** [console.firebase.google.com](https://console.firebase.google.com) →
    *Projekt hinzufügen*.
 2. **Web-App registrieren:** Projektübersicht → Symbol `</>` → App-Namen vergeben → registrieren.
-   Firebase zeigt das `firebaseConfig`-Objekt – diese Werte brauchst du gleich.
+   Firebase zeigt das `firebaseConfig`-Objekt - diese Werte brauchst du gleich.
 3. **Authentication aktivieren:** Linke Navigation → *Authentication* → *Sign-in method* →
    - **E-Mail/Passwort** aktivieren
    - **Google** aktivieren (Support-E-Mail wählen)
@@ -57,7 +57,7 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=1234567890
 VITE_FIREBASE_APP_ID=1:1234567890:web:abcdef
 ```
 
-> **Wichtig:** `.env.local` ist in `.gitignore` – niemals echte Keys committen.
+> **Wichtig:** `.env.local` ist in `.gitignore` - niemals echte Keys committen.
 > (Firebase-Web-API-Keys sind zwar nicht geheim, aber wir halten die Konfiguration trotzdem
 > projektlokal.)
 
@@ -79,7 +79,7 @@ veröffentlichen.
 ## 4) Seed-Daten einspielen
 
 Befüllt Firestore mit allen Beteiligten, Programmpunkten, Zeitblöcken, Aufgaben und einer Notiz aus
-dem realen E-Mail-Verlauf. **Idempotent** – eine Sammlung wird nur befüllt, wenn sie leer ist.
+dem realen E-Mail-Verlauf. **Idempotent** - eine Sammlung wird nur befüllt, wenn sie leer ist.
 
 1. **Service-Account-Schlüssel laden:** Firebase-Console → *Projekteinstellungen* (Zahnrad) →
    *Dienstkonten* → **Neuen privaten Schlüssel generieren** → die JSON-Datei als
@@ -109,7 +109,7 @@ Top-Level-Sammlungen für eine einzelne Projekt-Instanz:
 | `users`          | App-Nutzer (Auth) inkl. `role` (`admin`/`member`)             |
 | `people`         | Beteiligte / Mitarbeiter (mit Tags, Kontakt, Avatar-Farbe)    |
 | `acts`           | Programmpunkte / Auftritte (Reihenfolge, Probenzeit, Status)  |
-| `scheduleBlocks` | Ablauf-/Aufbauplan über mehrere Tage (Mi–Sa)                  |
+| `scheduleBlocks` | Ablauf-/Aufbauplan über mehrere Tage (Mi-Sa)                  |
 | `tasks`          | Aufgaben / Zuteilungen (das „Issue"-Äquivalent)               |
 | `notes`          | Freie Notizen (Markdown), an Act/Task/Person koppelbar        |
 | `comments`       | Kommentare/Aktivität an einer Aufgabe                         |
@@ -120,16 +120,16 @@ Alle Typen sind zentral in [`src/types.ts`](src/types.ts) definiert.
 
 ## Ansichten & Features
 
-- **Inbox/Dashboard** – „Mir zugewiesen", überfällige/offene Aufgaben, wichtige Termine.
-- **Aufgaben** – Listen- **und** Board-Ansicht (Kanban mit Drag-and-Drop), Filter nach Assignee,
+- **Inbox/Dashboard** - „Mir zugewiesen", überfällige/offene Aufgaben, wichtige Termine.
+- **Aufgaben** - Listen- **und** Board-Ansicht (Kanban mit Drag-and-Drop), Filter nach Assignee,
   Tag, Status, Priorität, Programmpunkt. Detail-Drawer (Desktop) / Vollbild-Sheet (Mobile) mit
   Markdown-Beschreibung, Multi-Assignees, Tags, Priorität, Fälligkeit, Verknüpfungen, Kommentaren.
-- **Zeitplan** – Tages-Tabs (Mi/Do/Fr/Sa), Timeline, farbcodiert nach Typ; unsichere Blöcke und
+- **Zeitplan** - Tages-Tabs (Mi/Do/Fr/Sa), Timeline, farbcodiert nach Typ; unsichere Blöcke und
   Show/Abbau hervorgehoben.
-- **Programm** – Auftritte in Reihenfolge mit Probenzeit, Mitwirkenden, Anforderungen, Status.
-- **Team** – Beteiligte mit farbigem Avatar, Tags, `tel:`/`mailto:`-Kontakt; Klick → zugewiesene
+- **Programm** - Auftritte in Reihenfolge mit Probenzeit, Mitwirkenden, Anforderungen, Status.
+- **Team** - Beteiligte mit farbigem Avatar, Tags, `tel:`/`mailto:`-Kontakt; Klick → zugewiesene
   Aufgaben.
-- **Notizen** – chronologischer Markdown-Feed, filterbar.
+- **Notizen** - chronologischer Markdown-Feed, filterbar.
 - **Command-Palette** (⌘/Ctrl + K) + globale Suche über Aufgaben, Programm, Team, Navigation.
 
 ### Tastatur-Shortcuts
@@ -146,7 +146,7 @@ Alle Typen sind zentral in [`src/types.ts`](src/types.ts) definiert.
 ## Daten anpassen
 
 Personen, Programmpunkte, Zeitblöcke und Aufgaben für das Seeding stehen kommentiert in
-[`scripts/seedData.ts`](scripts/seedData.ts) – dort ändern und erneut `npm run seed` in einer leeren
+[`scripts/seedData.ts`](scripts/seedData.ts) - dort ändern und erneut `npm run seed` in einer leeren
 Sammlung ausführen (oder Einträge direkt in der App bearbeiten, da alles live in Firestore landet).
 
 ## Skripte
@@ -174,6 +174,6 @@ npm run dev
 Login per E-Mail oder Google → alle Seed-Daten erscheinen, Änderungen syncen in Echtzeit auf alle
 Geräte.
 
-## Entwicklung und KI-Beteiligung
+## KI-Beteiligung
 
-Die Historie des Hauptbranches enthält ausdrücklich Claude zugeschriebene Beiträge ([Beispiel](https://github.com/ProfessorEngineergit/callsheet/commit/01c9e92347ee036caf589e427437d4dae3d6a09a)). Das belegt KI-Beteiligung an diesen Beiträgen, nicht die Herkunft jeder Zeile oder eine unabhängige Prüfung. Bestehende Autor-, Co-Autoren- und Sitzungsangaben bleiben erhalten.
+Einzelne Code-Beiträge sind ausdrücklich KI-Tools zugeschrieben: [generated with Claude Code](https://github.com/ProfessorEngineergit/callsheet/commit/cf1ba822269ad648f070ff4e4930e46f497346d4). Das gilt für diese Beiträge, nicht pauschal für alle Dateien.
