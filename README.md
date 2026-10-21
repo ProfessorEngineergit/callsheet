@@ -1,11 +1,10 @@
 # callsheet
 
-Mobil-first Projektmanagement-Tool für die **Abendshow zur 75-Jahr-Feier der Waldorfschule
+Mobile-first Projektmanagement-Prototyp für die **Abendshow zur 75-Jahr-Feier der Waldorfschule
 Frankfurt**. Mehrere Beteiligte (Schule, Technik, Artistik, Musik, Orga) koordinieren sich in
 Echtzeit: Programmpunkte, Zeitplan, Aufgaben/Zuteilungen, Notizen, Kontakte, offene Punkte.
 
-Das UI ist an **Linear** angelehnt: dunkel, ruhig, dicht, tastatur-getrieben, schnell – und auf
-Mobile wie Desktop gleichermaßen bedienbar.
+Die Oberfläche verwendet eine dunkle, an **Linear** angelehnte Gestaltung mit Tastaturkürzeln und Layouts für Mobilgeräte und Desktop.
 
 ## Tech-Stack
 
@@ -174,3 +173,7 @@ npm run dev
 
 Login per E-Mail oder Google → alle Seed-Daten erscheinen, Änderungen syncen in Echtzeit auf alle
 Geräte.
+
+## Entwicklung und KI-Beteiligung
+
+Die Historie des Hauptbranches enthält ausdrücklich Claude zugeschriebene Beiträge ([Beispiel](https://github.com/ProfessorEngineergit/callsheet/commit/01c9e92347ee036caf589e427437d4dae3d6a09a)). Das belegt KI-Beteiligung an diesen Beiträgen, nicht die Herkunft jeder Zeile oder eine unabhängige Prüfung. Bestehende Autor-, Co-Autoren- und Sitzungsangaben bleiben erhalten.
